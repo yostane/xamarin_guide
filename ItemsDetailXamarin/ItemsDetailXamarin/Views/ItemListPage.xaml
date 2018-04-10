@@ -3,15 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="ItemsDetailXamarin.Views.ItemListPage">
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding Posts}">
+        <ListView ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                            <StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
-                                <Label Text="{Binding .}" VerticalTextAlignment="Center" FontSize="Medium" />
-                                <Label Text="Label 2" VerticalTextAlignment="Center" FontSize="Small" />
-                            </StackLayout>
+                        <StackLayout Padding="5,0,5,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                <Label Text="{Binding Title}" VerticalTextAlignment="Center" FontSize="Small" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

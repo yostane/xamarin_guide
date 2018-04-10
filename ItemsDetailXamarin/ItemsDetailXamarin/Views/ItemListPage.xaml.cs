@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using RandomListXamarin.ViewModels;
+using RandomListXamarin.Model;
 
 namespace ItemsDetailXamarin.Views
 {
@@ -13,14 +14,14 @@ namespace ItemsDetailXamarin.Views
         public ItemListPage()
         {
             InitializeComponent();
-
             itemListViewModel = new ItemListViewModel();
+            BindingContext = itemListViewModel;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            itemListViewModel.UpdatePostsAsync();
+            await itemListViewModel.UpdatePostsAsync();
         }
     }
 }

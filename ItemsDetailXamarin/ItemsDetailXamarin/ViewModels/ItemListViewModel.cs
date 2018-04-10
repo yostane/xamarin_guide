@@ -10,19 +10,12 @@ namespace RandomListXamarin.ViewModels
 {
     public class ItemListViewModel : BaseViewModel
     {
-        ObservableCollection<Post> Posts { get; set; }
+        public ObservableCollection<Post> Posts { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public ItemListViewModel()
         {
-            Posts = new ObservableCollection<Post>();
-            Posts.Add(new Post());
-            Posts.Add(new Post());
-            Posts.Add(new Post());
-            Posts.Add(new Post());
-            Posts.Add(new Post());
-            Posts.Add(new Post());
-            Posts.Add(new Post());
+            this.Posts = new ObservableCollection<Post>();
         }
 
         public async Task UpdatePostsAsync()
