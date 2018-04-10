@@ -16,5 +16,7 @@ namespace RandomListXamarin.Model
 
         [JsonProperty("body")]
         public string Body { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

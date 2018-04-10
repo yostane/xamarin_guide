@@ -22,7 +22,11 @@ namespace RandomListXamarin.ViewModels
         {
             var newPosts = await JsonPlaceholderHelper.GetPostsAsync();
             this.Posts.Clear();
-            newPosts.ForEach((post) => this.Posts.Add(post));
+            newPosts.ForEach((post) =>
+            {
+                post.ImageUrl = "https://picsum.photos/70/?image=" + newPosts.IndexOf(post);
+                this.Posts.Add(post);
+            });
         }
 
     }
