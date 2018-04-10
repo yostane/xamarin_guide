@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using ItemsDetailXamarin.Views;
 
 namespace ItemsDetailXamarin
 {
@@ -8,7 +9,7 @@ namespace ItemsDetailXamarin
         {
             InitializeComponent();
 
-            MainPage = new ItemsDetailXamarinPage();
+            MainPage = new ItemListPage();
         }
 
         protected override void OnStart()

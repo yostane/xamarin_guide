@@ -15,7 +15,12 @@ namespace ItemsDetailXamarin.Views
             InitializeComponent();
 
             itemListViewModel = new ItemListViewModel();
-            this.BindingContext = itemListViewModel;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            itemListViewModel.UpdatePostsAsync();
         }
     }
 }
