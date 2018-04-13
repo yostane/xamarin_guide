@@ -349,3 +349,10 @@ Further improvements can be implemented. For example, the list of posts can be p
 I hope you liked working with Xamarin as much as myself :).
 
 The project source is on [GitHub](https://github.com/yostane/xamarin_guide/tree/master/ItemsDetailXamarin). Happy coding.
+
+## Links
+
+- [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com/)
+- [https://picsum.photos](https://picsum.photos/).
+- [FFImageLoading library](https://github.com/luberda-molinet/FFImageLoading)
+- [Microsoft Docs](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/images?tabs=vswin)
