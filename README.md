@@ -1,30 +1,36 @@
-# Xamarin guide
+# Xamarin List view guide
 
-This article will guide through the steps of creating a typical list / detail app using Xamarin Forms. The advantage of using Xamarin Forms is that we will obtain a native Android and iOS apps using a single C# / Xaml codebase.
+This article will guide through the steps of creating a typical list / detail app using Xamarin Forms. The advantage of using Xamarin Forms is that we will obtain a native Android and iOS apps using a single C# / XAML codebase.
 
-I am using macOS and Visual Studio Community for macOS but you can also follow the guide using Visual Studio on windows.
+I am using macOS and Visual Studio Community for macOS but you can also follow the guide on Windows by using Visual Studio.
 
-Let's start by the beginning of all things; creating the project.
+Let's start by the beginning of all projects; which is creating it :smiley_cat:.
 
 ## Creating the project
 
-Open Visual Studio and create a new Project -> Choose Blank App -> And the click . You will a minimal solution that contains three minimal projects (as usual for Xamarin projects :smile: )
+Open Visual Studio and create a new Project:
+
+- Choose Blank App
+- Enter a name, check iOS, Android and XAML checkboxes. Make sure to choose **Potable class library option** (the first one).
+- Continue until you click on the **Create** button.
+
+You will a minimal solution that contains three minimal projects (as usual for Xamarin projects :smile: )
 
 As a reminder, we are creating a Xamarin forms app that fetches a list of items from the internet and shows in on a scrollable list. Each row of the list will display an item with some text content and a thumbnail.
 
 We are not going to developer neither the JSON API nor the thumbnail server. Instead, we'll use a free JSON generator for developers [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com/) and a free image generator [https://picsum.photos](https://picsum.photos/).
 
-Before Starting to code, let's create some folders to organize our code. There will be 4 main folders: Views, ViewModels, Models and Helpers.
+Before Starting to code, let's create some folders to organize our code. There will be 4 main folders: Views, ViewModels, Models and Helpers. Also, delete all XAML and XAML.CS files except **App.xaml** and **App.xaml.cs**.
 
 In the next section, we will create the main view.
 
 ## The ItemListView
 
-The main view of this tutorial shows random posts from [jsonplaceholder post API](https://jsonplaceholder.typicode.com/posts) and associates each one with a random thumbnail downloaded from [picsum.photos](https://picsum.photos/). In this section, we are just going to create the model, the view and its view model. So, let's start.
+The main view of this tutorial shows random posts from [jsonplaceholder post API](https://jsonplaceholder.typicode.com/posts) and associates each one with a random thumbnail downloaded from [picsum.photos](https://picsum.photos/). In this section, we are just going to create the model, the view and its view model without fetching any data from the network. Without further due, let's get going.
 
-Firstly, in the Models folder, create a new class called `Posts.cs` which represents a single post. Add the following properties: `Title`, `UserId`, `Id`, `Body`, `ÌmageUrl`. The first four variables are mapped from the [jsonplaceholder post API](https://jsonplaceholder.typicode.com/posts) while the `ImageUrl` is generated randomly as we will see later.
+Firstly, in the *Models* folder, create a new class called `Posts.cs` which represents a single post. Add the following properties: `Title`, `UserId`, `Id`, `Body`, `ÌmageUrl`. The first four variables are mapped from the [jsonplaceholder post API](https://jsonplaceholder.typicode.com/posts) while the `ImageUrl` is generated randomly as we will see later.
 
-The posts class should look like this:
+The `Post` class should look like this:
 
 ```cs
 namespace RandomListXamarin.Model
@@ -40,7 +46,7 @@ namespace RandomListXamarin.Model
 }
 ```
 
-Secondly, create the view model class `ItemListViewModel`. It defines the Posts property that stores the current list of posts. It also inherits from a class called `BaseViewModel`. It is usual in MVVM to have this kind of base class to simplify binding. Here is its definition that you just need to copy.
+Secondly, create the view model class `ItemListViewModel` (a view model can be seen as an object that handles the data that will be displayed by the view). It defines the `Posts` property that stores the current list of posts. It also inherits from a class called `BaseViewModel`. It is usual in *MVVM* to have this kind of base class that simplifies binding. Here is its definition that you just need to copy and paste.
 
 ```cs
 namespace RandomListXamarin.ViewModels
@@ -102,11 +108,11 @@ namespace RandomListXamarin.ViewModels
 }
 ```
 
-Note that in the constructor, we add two hard coded posts for the purpose of testing that the binding to the view works. We will replace it later with the content fetched from the API :smile:.
+Note that in the constructor, we add two hard coded posts for the purpose of testing that binding the view model to the view actually works. We will replace it later with the content fetched from the API :smile:.
 
-The third and last step in this section is to create the view that shows the Posts of our view model. In the views folder create a **Content Page XAML form** by right clicking on the view folder, then by choosing Add -> New file -> **Content Page XAML form**. You can name it *ItemListPage.xaml*.
+The third and last step in this section is to create the view that shows the `Posts` of the view model. In the views folder, create a **Content Page XAML form** by right clicking on the *Views* folder, then by choosing Add -> New file -> **Content Page XAML form**. You can name it *ItemListPage.xaml*.
 
-After that, Open the code behind file *ItemListPage.xaml.cs*. There, define an item ItemListViewModel variable instance and set it as a `BindingContext` in the constructor. The `BindingContext` tells Xamarin which object is used for the binding in the XAML. The code behind should resemble to the following code:
+After that, Open the code behind file *ItemListPage.xaml.cs*. There, define an  `ItemListViewModel` instance variable and set it as a `BindingContext` in the constructor. The `BindingContext` tells Xamarin which object is used for the binding in the XAML. The code behind should resemble to the following code:
 
 ```cs
 namespace ItemsDetailXamarin.Views
@@ -125,7 +131,7 @@ namespace ItemsDetailXamarin.Views
 }
 ```
 
-Next, open the *XAML* file where we create a `ListView` control that binds to the `Posts` property of the `BindingContext` (which is an instance of `ItemListViewModel`). The visual representation of each item of the list can be defined using `ListViewItem.ItemTemplate` tag. The very interesing thing is that inside this tag, we are automagically bound to a the current `Post` instance. For example, this snippet shows the titles of the posts.
+Next, open the *XAML* file where we create a `ListView` control that binds to the `Posts` property of the `BindingContext` (which is an instance of `ItemListViewModel`). The visual representation of each item of the list can be defined using `ListViewItem.ItemTemplate` tag. The very interesting thing is that inside this tag, we are automagically bound to the current `Post` item. For example, this snippet shows the titles of the posts.
 
 ```xml
 <ListView ItemsSource="{Binding Posts}">
@@ -139,7 +145,7 @@ Next, open the *XAML* file where we create a `ListView` control that binds to th
 </ListView>
 ```
 
-The final XAML file defines is more interesting because it shows also the an image which is bound to the `ImageUrl`. Here is the full content of the XAML file
+The following XAML file is more interesting because it shows also an image which is bound to the `ImageUrl`. Here is the full content of *ItemListPage.xaml*.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -161,7 +167,7 @@ The final XAML file defines is more interesting because it shows also the an ima
 </ContentPage>
 ```
 
-Finally, in the `App.xaml.cs`'s constructor, set the `MailPage` to an instance of `ItemListPage` as follows.
+Finally, in the `App.xaml.cs`'s constructor, set the `MainPage` to be an instance of `ItemListPage` as follows.
 
 ```cs
 public App()
@@ -194,7 +200,7 @@ using (var httpClient = new HttpClient())
 }
 ```
 
-Parsing is also straight forward after annotating the `Post`class:
+Parsing is also straight forward after annotating the `Post` class:
 
 ```cs
 var posts = JsonConvert.DeserializeObject<List<Post>>(jsonString);
@@ -211,7 +217,7 @@ Look `Newtonsoft.Json` for and add it.
 
 !["Newtonsoft JSON"](./assets/newtonsoft_json.png)
 
-We can now fully implement our logic. Continue by adding somme attributes to the properties of the `Posts` class. They allow to tell the Json parser how to map each Json property with the properties of the post class. To better understand, let's look at a snippet of the Json received by calling [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts).
+We can now fully implement our logic. Continue by adding somme attributes to the properties of the `Post` class. They tell the Json parser how to map the properties from the Json string to the properties of the `Post` class. To better understand, let's look at a snippet of the Json received by calling [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts).
 
 ```json
 [
@@ -225,7 +231,7 @@ We can now fully implement our logic. Continue by adding somme attributes to the
 ]
 ```
 
-Here, we want to map `userId` field of the Json with the `UserId` field of the Posts class and so on. We do this by putting `[JsonProperty("userId")]` before the `UserId`property definition.
+Here, we want to map `userId` field of the Json with the `UserId` field of the `Post` class and so on. We do this by putting `[JsonProperty("userId")]` before the `UserId` property declaration.
 
 Here is the updated `Posts` class with all the annotations:
 
@@ -253,7 +259,7 @@ namespace RandomListXamarin.Model
 }
 ```
 
-No surprise here. Note that we didn't map the ImageUrl property because we are going set there a different value later. The next step consists of downloading and parsing the Json file.
+No surprise here. Note that we didn't map the ImageUrl property since it is not present in the Json API. But we still need it for later use. The next step consists of downloading and parsing the Json file.
 
 If you remember, I already showed how to download a Json file and also how to parse it. Let's put that together in a `GetPostsAsync` method. Since this is more of a helper method, please define it in the `JsonPlaceholderHelper` static class and place it inside the **Helpers** folder. That's some clean organization :file_folder:.
 
@@ -285,7 +291,7 @@ namespace ItemsDetailXamarin.Helpers
 }
 ```
 
-There are two more things to do before getting the posts displayed. The first one consists in adding a method the in the view model which calls the helper method and adds the returned posts to the `Posts` collection. Please add this method to the `ItemListViewModel`
+There are two more things to do before getting the posts displayed. The first one consists in adding a method to the view model that calls the previously defined helper method and sets the returned posts to the `Posts` collection. Please add this method to the `ItemListViewModel`
 
 ```cs
 public async Task UpdatePostsAsync()
@@ -299,7 +305,7 @@ public async Task UpdatePostsAsync()
 }
 ```
 
-The last thing is to call this function from the view. There are many ways to de it. One solution is to override the `OnAppearing` method because it is automatically called when just before the view appears. Again, please add this code to *ItemListPage.xaml.cs*'s `ItemListPage` class.
+The last thing is to call this function from the view. There are many ways to do it. One solution is to override the `OnAppearing` method because it is automatically called just before the view appears. Again, please add this code to *ItemListPage.xaml.cs*'s `ItemListPage` class.
 
 ```cs
 protected override async void OnAppearing()
@@ -309,13 +315,13 @@ protected override async void OnAppearing()
 }
 ```
 
-Launch the app again. Wow it works :sparkler:. However, there are not thumbnails for now. The next section deals with that.
+Launch the app again. Wow it works :sparkler:. However, there are no thumbnails for now. The next section deals with that.
 
 !["App shows posts without thumbnails"](./assets/posts_no_thumbnails.png)
 
 ## Displaying thumbnails
 
-Here again, showing thumbnails is very easy. Since the ImageUrl property is already bound in the view, we just need to set in ImageUrl and that's it. Xamarin automatically, downloads the images and as a bonus, caches it for us.
+As the previous tasks, showing thumbnails is very easy. Since the `ImageUrl` property was already bound in the view, we just need to set a correct ImageUrl and that's it. Xamarin automatically, downloads the images and as a bonus, caches it for us.
 
 In this guide, we are going to download images from [picsum.photos](https://picsum.photos/), particularly this type of url: [https://picsum.photos/70/?image={an integer value}](https://picsum.photos/70/?image=[an integer value) where the integer value corresponds the index of the post in the list. For example the thumbnail url of the post at index 57 is [https://picsum.photos/70/?image=58](https://picsum.photos/70/?image=58). In code, update the `UpdatePostsAsync` method as follows:
 
@@ -332,7 +338,7 @@ public async Task UpdatePostsAsync()
 }
 ```
 
-The trick is to set the image url before adding it to the Posts collection.
+The trick is to set the image url before adding it to the `Posts` collection.
 
 If you run the app, the thumbnails should be shown progressively.
 
@@ -342,7 +348,7 @@ It's conclusion time for this guide.
 
 ## Conclusion and going further
 
-This guide showed how to create a Xamarin app that downloads a Json array, parses it and shows it on a list along with thumbnails. Thanks to the Xamarin SDK and .Net Standard, we did not write a lot of code and we can run this app on iOS and Android.
+This guide showed how to create a Xamarin app that downloads a Json array, parses it and shows it on a list along with thumbnails. Thanks to the Xamarin SDK and .Net Standard, we did not write a lot of code and we can run this app on both iOS and Android devices.
 
 Further improvements can be implemented. For example, the list of posts can be persisted for offline use. Also, we can display a placeholder for thumbnails using the [FFImageLoading library](https://github.com/luberda-molinet/FFImageLoading).
 
