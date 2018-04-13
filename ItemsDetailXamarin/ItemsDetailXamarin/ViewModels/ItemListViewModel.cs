@@ -11,7 +11,6 @@ namespace RandomListXamarin.ViewModels
     public class ItemListViewModel : BaseViewModel
     {
         public ObservableCollection<Post> Posts { get; set; }
-        public Command LoadItemsCommand { get; set; }
 
         public ItemListViewModel()
         {

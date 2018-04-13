@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace RandomListXamarin.Model
 {
     public class Post

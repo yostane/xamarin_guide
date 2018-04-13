@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RandomListXamarin.Model;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -15,16 +14,9 @@ namespace ItemsDetailXamarin.Helpers
         {
             using (var httpClient = new HttpClient())
             {
-                try
-                {
-                    var result = await httpClient.GetStringAsync(BASE_URL + POST_ENDPOINT);
-                    var posts = JsonConvert.DeserializeObject<List<Post>>(result);
-                    return posts;
-                }
-                catch (Exception e)
-                {
-                    return new List<Post>();
-                }
+                var jsonString = await httpClient.GetStringAsync(BASE_URL + POST_ENDPOINT);
+                var posts = JsonConvert.DeserializeObject<List<Post>>(jsonString);
+                return posts;
             }
         }
     }
