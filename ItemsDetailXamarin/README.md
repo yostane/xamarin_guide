@@ -362,7 +362,7 @@ Further improvements can be implemented. For example, the list of posts can be p
 
 I hope you liked working with Xamarin as much as myself :).
 
-The project source is on [GitHub](https://github.com/yostane/xamarin_guide/tree/master/ItemsDetailXamarin). Happy coding.
+The project source is on [GitHub](https://github.com/yostane/xamarin_guide/tree/master/ItemListXamarin). Happy coding.
 
 ## Links
 
