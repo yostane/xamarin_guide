@@ -1,5 +1,13 @@
 # Xamarin List view guide
 
+- [Xamarin List view guide](#xamarin-list-view-guide)
+    - [Creating the project](#creating-the-project)
+    - [The ItemListView](#the-itemlistview)
+    - [Fetching JSON from the internet](#fetching-json-from-the-internet)
+    - [Displaying thumbnails](#displaying-thumbnails)
+    - [Conclusion and going further](#conclusion-and-going-further)
+    - [Links](#links)
+
 This article will guide through the steps of creating a typical list / detail app using Xamarin Forms. The advantage of using Xamarin Forms is that we will obtain a native Android and iOS apps using a single C# / XAML codebase.
 
 I am using macOS and Visual Studio Community for macOS but you can also follow the guide on Windows by using Visual Studio.
