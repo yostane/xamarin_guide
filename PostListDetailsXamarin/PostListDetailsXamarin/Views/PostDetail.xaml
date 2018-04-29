@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <Label TextColor="Gray">Title: </Label>
             <Label Text="{x:Binding Post.Title}" />
             <Label TextColor="Gray">Body: </Label>
             <Label Text="{x:Binding Post.Body}" />
-            <Image Source="{x:Binding Post.ImageUrl}" WidthRequest="70" HeightRequest="70" />
+            <Image Source="{x:Binding Post.ImageUrl}" WidthRequest="70"
+                 HeightRequest="70" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

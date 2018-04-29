@@ -12,8 +12,7 @@ namespace ItemsDetailXamarin.Views
         public ItemListPage()
         {
             InitializeComponent();
-            itemListViewModel = new ItemListViewModel();
-            BindingContext = itemListViewModel;
+            itemListViewModel = BindingContext as ItemListViewModel;
         }
 
         protected override async void OnAppearing()
@@ -21,6 +20,7 @@ namespace ItemsDetailXamarin.Views
             base.OnAppearing();
             await itemListViewModel.UpdatePostsAsync();
         }
+
 
         async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {

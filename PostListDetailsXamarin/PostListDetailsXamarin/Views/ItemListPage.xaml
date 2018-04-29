@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ItemsDetailXamarin.Views.ItemListPage" Title="Posts">
+<!--
+ Reference to namespace where app is declared: xmlns:mvvm="clr-namespace:PostListDetailsXamarin;assembly=PostListDetailsXamarin"
+ Bind to locator: BindingContext="{Binding Source={x:Static mvvm:App.Locator}, Path=ItemListViewModel}
+-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:mvvm="clr-namespace:PostListDetailsXamarin;assembly=PostListDetailsXamarin"
+     x:Class="ItemsDetailXamarin.Views.ItemListPage" Title="Posts"
+     BindingContext="{Binding Source={x:Static mvvm:App.Locator}, Path=ItemListViewModel}">
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectPost}" VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement" ItemSelected="Handle_ItemSelected">
+        <ListView ItemsSource="{x:Binding Posts}"
+             SelectedItem="{x:Binding SelectPost}"
+             VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement"
+             ItemSelected="Handle_ItemSelected"
+             RefreshCommand="{x:Binding RehreshCommand}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="5,0,5,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                            <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50"  />
-                            <Label Text="{Binding Title}" VerticalTextAlignment="Center" FontSize="Small" />
+                        <StackLayout Padding="5,0,5,0"
+                             HorizontalOptions="StartAndExpand"
+                             Orientation="Horizontal">
+                            <Image Source="{Binding ImageUrl}" WidthRequest="50"
+                                 HeightRequest="50" />
+                            <Label Text="{Binding Title}"
+                                 VerticalTextAlignment="Center" FontSize="Small" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

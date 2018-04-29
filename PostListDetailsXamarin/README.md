@@ -1,4 +1,13 @@
-# Some Xamarim guides and tutorials
+# Master detail navigation with Xamarin
+
+## Adding the PostDetail page
+
+## Making the app more MVVM compliant
+
+Install extensions
+
+* MVVLlight
+* Navigation service for Xamarin Forms
 
 ## Links
 

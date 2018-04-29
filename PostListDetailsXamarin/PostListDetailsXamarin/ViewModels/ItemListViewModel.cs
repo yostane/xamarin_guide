@@ -14,12 +14,17 @@ namespace RandomListXamarin.ViewModels
 {
     public class ItemListViewModel : BaseViewModel
     {
+
         public ObservableCollection<Post> Posts { get; set; }
-        public ICommand openPostCommand { get; private set; }
+        public ICommand OpenPostCommand { get; private set; }
+
+        public ICommand RefreshCommand { get; private set; }
 
         public ItemListViewModel()
         {
             this.Posts = new ObservableCollection<Post>();
+
+            RefreshCommand = new Command(async () => await UpdatePostsAsync());
         }
 
         public async Task UpdatePostsAsync()
