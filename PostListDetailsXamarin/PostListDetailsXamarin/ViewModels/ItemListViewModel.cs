@@ -9,6 +9,8 @@ using System.Windows.Input;
 using PostListDetailsXamarin.Views;
 using System.Linq;
 using System.Collections.Generic;
+using PostListDetailsXamarin.ViewModels;
+using PostListDetailsXamarin;
 
 namespace RandomListXamarin.ViewModels
 {
@@ -16,15 +18,18 @@ namespace RandomListXamarin.ViewModels
     {
 
         public ObservableCollection<Post> Posts { get; set; }
-        public ICommand OpenPostCommand { get; private set; }
-
+        public ICommand ItemSelectedCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
         public ItemListViewModel()
         {
             this.Posts = new ObservableCollection<Post>();
-
             RefreshCommand = new Command(async () => await UpdatePostsAsync());
+            //The command taks a Post as a parameter, because it is the type of the selected item
+            ItemSelectedCommand = new Command<Post>((selectedItem) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Command invoked");
+            });
         }
 
         public async Task UpdatePostsAsync()

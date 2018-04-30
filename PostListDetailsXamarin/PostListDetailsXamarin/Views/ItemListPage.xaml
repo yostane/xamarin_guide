@@ -5,15 +5,29 @@
 -->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-     xmlns:mvvm="clr-namespace:PostListDetailsXamarin;assembly=PostListDetailsXamarin"
+     xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+     xmlns:local="clr-namespace:PostListDetailsXamarin;assembly=PostListDetailsXamarin"
      x:Class="ItemsDetailXamarin.Views.ItemListPage" Title="Posts"
-     BindingContext="{Binding Source={x:Static mvvm:App.Locator}, Path=ItemListViewModel}">
+     BindingContext="{Binding Source={x:Static local:App.Locator}, Path=ItemListViewModel}">
+    <!-- Added the converter that gets the selected item from the event -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- The SelectedItemEventArgsToSelectedItemConverter converter is defined in our local namespace 
+            which is mapped to the c# namespace: PostListDetailsXamarin-->
+            <local:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!--The usual page content-->
     <ContentPage.Content>
         <ListView ItemsSource="{x:Binding Posts}"
              SelectedItem="{x:Binding SelectPost}"
              VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement"
-             ItemSelected="Handle_ItemSelected"
              RefreshCommand="{x:Binding RehreshCommand}">
+            <!-- The behavior that allows to use a command for the SelectedItem event -->
+            <behaviors:EventHandlerBehavior EventName="ItemSelected">
+                <behaviors:InvokeCommandAction Command="{Binding ItemSelectedCommand}"
+                     Converter="{StaticResource SelectedItemConverter}" />
+            </behaviors:EventHandlerBehavior>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

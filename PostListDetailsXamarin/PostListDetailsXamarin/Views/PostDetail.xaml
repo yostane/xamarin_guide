@@ -3,7 +3,7 @@
      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
      x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" Padding="5,5,5,5">
             <Label TextColor="Gray">Title: </Label>
             <Label Text="{x:Binding Post.Title}" />
             <Label TextColor="Gray">Body: </Label>

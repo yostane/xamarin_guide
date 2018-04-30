@@ -24,7 +24,8 @@ namespace ItemsDetailXamarin.Views
 
         async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new PostDetail(e.SelectedItem as Post));
+            var postDetailPage = new PostDetail(e.SelectedItem as Post);
+            await Navigation.PushAsync(postDetailPage);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace PostListDetailsXamarin.ViewModels
 {
     public class Locator
     {
-        public const string ITEM_LIST_PAGE = "ItemListPage";
-        public const string ITEM_DETAIL_PAGE = "PostDetail";
+        public const string ItemListPage = "ItemListPage";
+        public const string PostDetailPage = "PostDetail";
 
         static Locator()
         {
@@ -22,8 +22,8 @@ namespace PostListDetailsXamarin.ViewModels
 
             //register the navigation service
             var navigation = new NavigationService();
-            navigation.Configure(ITEM_LIST_PAGE, typeof(ItemListPage));
-            navigation.Configure(ITEM_DETAIL_PAGE, typeof(PostDetail));
+            navigation.Configure(ItemListPage, typeof(ItemListPage));
+            navigation.Configure(PostDetailPage, typeof(PostDetail));
             SimpleIoc.Default.Register(() => navigation);
         }
 
