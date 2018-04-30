@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Ioc;
 using MvvmLight.XamarinForms;
 using ItemsDetailXamarin.Views;
 using PostListDetailsXamarin.Views;
 using RandomListXamarin.ViewModels;
+using CommonServiceLocator;
 namespace PostListDetailsXamarin.ViewModels
 {
     public class Locator

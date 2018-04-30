@@ -113,7 +113,7 @@ The second and third conditions are very easy to satisfy, because it is really t
 Install extensions
 
 * MVVLlight
-* Navigation service for Xamarin Forms
+* mvvmlight.xamarinforms
 
 ## Links
 
