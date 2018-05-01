@@ -1,7 +1,5 @@
 ﻿using Xamarin.Forms;
-using RandomListXamarin.ViewModels;
-using PostListDetailsXamarin.Views;
-using RandomListXamarin.Model;
+using PostListDetailsXamarin.ViewModels;
 
 namespace ItemsDetailXamarin.Views
 {

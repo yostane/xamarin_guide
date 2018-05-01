@@ -175,14 +175,172 @@ Everything is wired now, please run the app and tap on an item. Nothing should h
 
 Perfect, the code behind does not handle the tap event anymore and we have a cleaner mvvm pattern thanks to commands. We will tackle next the problem of navigating from the view model.
 
-## Navigation from the view model
+## Handling navigation in the view models
 
-The following step consists in opening the detail view in the command. But, this is not possible because the view model does not have access to `Navigation` object because it is part of the page.
+The following step consists in opening the detail view in the command. However, this is not natively possible because the view model does not have access to a `Navigation` object that handles navigation in the app. This object is included in `ContentPage` classes such as `ItemListPage`.
 
-Install extensions
+The idea is to delegate the navigation to an intermediate object. This kind of object is called a **navigation service** and its class name usually resembles that. This static object is instantiated on the app launch and is called by the view models to ask him to navigate to any page that he was configured to work with.
+
+Hopefully, we do not need to code a navigation service because implementations are available in NuGet. Here, we are going to use [MvvmLightNavigationExtension](https://github.com/dhindrik/MvvmLightNavigationExtension) that provides an implementation of a navigation service compatible with [MVVM Light Toolkit](http://www.mvvmlight.net/). MVVM Light Toolkit is a powerful framework provides, among other things, an IoC container. Surprise :birthday:, we will also add dependency injection to our project. That's two birds with one stone !.
+
+To synthesize we are going to do two things:
+
+* Adopt dependency injection
+* Use a navigation service
+
+In order to do, we first need to install these two NuGet packages:
 
 * MVVLlight
 * mvvmlight.xamarinforms
+
+Next, please create a `Locator` class which is responsible for providing a reference to view models and the navigation service. The references will be managed by the IoC container of MVVM Light. In order to register a class to MVVM Light, we call on of the `SimpleIoc.Default.Register` methods. And then, in order to get a reference to a registered instance, we just need to call `SimpleIoc.Default.GetInstance<CLASS_NAME>()`. Here is the content of a `Locator` class which manages the view models.
+
+```cs
+public class Locator
+{
+    static Locator()
+    {
+        //register the viewmdoels
+        SimpleIoc.Default.Register<ItemListViewModel>();
+        SimpleIoc.Default.Register<PostDetailViewModel>();
+    }
+
+    public ItemListViewModel ItemListViewModel => SimpleIoc.Default.GetInstance<ItemListViewModel>();
+    public PostDetailViewModel PostDetailViewModel => SimpleIoc.Default.GetInstance<PostDetailViewModel>();
+}
+```
+
+Also, please add a static reference to a `Locator` in the `App` class.
+
+```cs
+private static Locator _locator;
+///<summary>
+/// static app wide locator
+/// </summary>
+public static Locator Locator => _locator ?? (_locator = new Locator());
+```
+
+Doing this way, we can get a reference to any view model anywhere in the code, **and even in xaml**. In code, we call either `App.Locator.ItemListViewModel` or `App.Locator.PostDetailViewModel` to get a reference to a view model. In xaml, we set the `BindingContext` property this way.
+
+```xml
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack"
+     xmlns:local="clr-namespace:PostListDetailsXamarin"
+     x:Class="ItemsDetailXamarin.Views.ItemListPage" Title="Posts"
+     BindingContext="{Binding Source={x:Static local:App.Locator}, Path=ItemListViewModel}">
+```
+
+As you can see, we have added two attributes:
+
+* The line `xmlns:local="clr-namespace:PostListDetailsXamarin"` sets the `local` alias to the App's class namespace. You can replace the `clr-namespace:` to the name of the namespace of you `App` class.
+* The line `BindingContext="{Binding Source={x:Static local:App.Locator}, Path=ItemListViewModel}"` sets the binding context to `ItemListViewModel` property of the class `local:App.Locator`, which is in other terms similar to calling `BindingContext = App.Locator.ItemListViewModel` in the code behind.
+
+If you do that to the ItemListViewModel, you can remove the code that sets the binding context in the view model. We will deal with the `PostDetail` xaml page later.
+
+Now that the Locator is configured with the view models, let's add the navigation service. Since the latter requires some configuration before registering it, we will proceed differently as indicated by thus snippet:
+
+```cs
+public const string ItemListPage = "ItemListPage";
+public const string PostDetailPage = "PostDetail";
+//Create the navigation service
+var navigation = new NavigationService();
+//Configure the pages managed by the navigation service. Each page is referenced by a key.
+navigation.Configure(ItemListPage, typeof(ItemListPage));
+navigation.Configure(PostDetailPage, typeof(PostDetail));
+SimpleIoc.Default.Register(() => navigation);
+```
+
+Here, the IoC container registers the navigation service using our factory code. The full content of the `Locator` class is as follows.
+
+```cs
+/// <summary>
+/// Allows to get a reference to the view models and the navigation service
+/// </summary>
+public class Locator
+{
+    /// <summary>
+    /// The key that allows to reference the ItemListPage using the navigation service
+    /// </summary>
+    public const string ItemListPage = "ItemListPage";
+    /// <summary>
+    /// The key that allows to reference the PostDetailPage using the navigation service
+    /// </summary>
+    public const string PostDetailPage = "PostDetail";
+
+    static Locator()
+    {
+        //register the viewmdoels
+        SimpleIoc.Default.Register<ItemListViewModel>();
+        SimpleIoc.Default.Register<PostDetailViewModel>();
+
+        //Create the navigation service
+        var navigation = new NavigationService();
+        //Configure the pages managed by the navigation service. Each page is referenced by a key.
+        navigation.Configure(ItemListPage, typeof(ItemListPage));
+        navigation.Configure(PostDetailPage, typeof(PostDetail));
+        SimpleIoc.Default.Register(() => navigation);
+    }
+
+    #region getters
+
+    public NavigationService NavigationService => SimpleIoc.Default.GetInstance<NavigationService>();
+    public ItemListViewModel ItemListViewModel => SimpleIoc.Default.GetInstance<ItemListViewModel>();
+    public PostDetailViewModel PostDetailViewModel => SimpleIoc.Default.GetInstance<PostDetailViewModel>();
+
+    #endregion
+}
+```
+
+On last thing to do to wire the `NavigationService` is to initialize it in the `App` constructor as follows.
+
+```cs
+public App()
+{
+    InitializeComponent();
+    var navigationPage = new NavigationPage(new ItemListPage());
+    //Initialize the NavigationService
+    Locator.NavigationService.Initialize(navigationPage);
+    MainPage = navigationPage;
+}
+```
+
+In order to navigate to page, say for example the details page, we simply call `App.Locator.NavigationService.NavigateTo(Locator.PostDetailPage);` from the view model. That's some cool feature here isn't it :smirk: ?.
+
+Okay, we are near the end of the road :car:. We just need now to update the _PageDetail_ page and its view model to use the `Locator` and the `NavigationService`. First of all, we need to update the `ItemSelectCommand` of the `ItemListViewModel` to open the post details page for the selected post.
+
+```cs
+//The command taks a Post as a parameter, because it is the type of the selected item
+public ICommand ItemSelectedCommand => new Command<Post>(selectedItem =>
+{
+    App.Locator.PostDetailViewModel.Post = selectedItem;
+    App.Locator.NavigationService.NavigateTo(Locator.PostDetailPage);
+});
+```
+
+Next, in the `PageDetail` xaml page, set the binding context as indicate earlier.
+
+```xml
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:local="clr-namespace:PostListDetailsXamarin"
+     x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail"
+     BindingContext="{Binding Source={x:Static local:App.Locator}, Path=PostDetailViewModel}">
+```
+
+You can also keep the default constructor in the code behind and delete everything else. You can also clean the `PageDetailViewModel` because we do not need to custom constructor anymore.
+
+And that's it. The master detail navigation works fine while still applying some nice design patterns.
+
+![spoiler](./assets/post-detail-2.png)
+
+## Conclusion
+
+In this guide, we added a detail view to an existing Xamarin app. We first coded without caring about mvvm and splitting the concerns. After that, we worked on adding commends, behaviors, dependency injection and a navigation service. Although the result is pretty interesting, the way to get there was pretty tough. For example, some libraries did not work as expected, I also needed to update Visual Studio Mac to a beta version.
+
+My final note after finishing this app is that while Xamarin is still unstable and not mature in terms of libraries and tooling, it goes to towards the correct direction and feel that it will get better if Microsoft keeps putting the necessary efforts in that technology.
+
+Happy coding.
 
 ## Links
 

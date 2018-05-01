@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-     x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail">
+     xmlns:local="clr-namespace:PostListDetailsXamarin"
+     x:Class="PostListDetailsXamarin.Views.PostDetail" Title="Post detail"
+     BindingContext="{Binding Source={x:Static local:App.Locator}, Path=PostDetailViewModel}">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="5,5,5,5">
             <Label TextColor="Gray">Title: </Label>

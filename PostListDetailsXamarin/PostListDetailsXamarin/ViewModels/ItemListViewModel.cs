@@ -11,8 +11,9 @@ using System.Linq;
 using System.Collections.Generic;
 using PostListDetailsXamarin.ViewModels;
 using PostListDetailsXamarin;
+using RandomListXamarin.ViewModels;
 
-namespace RandomListXamarin.ViewModels
+namespace PostListDetailsXamarin.ViewModels
 {
 	public class ItemListViewModel : BaseViewModel
 	{
@@ -20,17 +21,17 @@ namespace RandomListXamarin.ViewModels
 		public ObservableCollection<Post> Posts { get; set; }
 
 		//The command taks a Post as a parameter, because it is the type of the selected item
-		public ICommand ItemSelectedCommand => new Command<Post>((selectedItem) =>
+		public ICommand ItemSelectedCommand => new Command<Post>(selectedItem =>
 		{
-			System.Diagnostics.Debug.WriteLine("Command invoked for item: " + selectedItem.Title);
+			App.Locator.PostDetailViewModel.Post = selectedItem;
+			App.Locator.NavigationService.NavigateTo(Locator.PostDetailPage);
 		});
 
-		public ICommand RefreshCommand { get; private set; }
+		public ICommand RefreshCommand => new Command(async () => await UpdatePostsAsync());
 
 		public ItemListViewModel()
 		{
 			this.Posts = new ObservableCollection<Post>();
-			RefreshCommand = new Command(async () => await UpdatePostsAsync());
 		}
 
 		public async Task UpdatePostsAsync()
