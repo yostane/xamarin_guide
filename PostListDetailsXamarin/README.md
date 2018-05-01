@@ -1,4 +1,6 @@
-# Master detail navigation with Xamarin
+# Displaying a detail page in Xamarin using mvvm
+
+The keywords are: mvvm, behaviors, commands, navigation service, MVVM Light.
 
 In the previous guide, we developed a Xamarin that displays on a list data fetched from the internet. In this guide, we go further by showing a detail view when we tap on an item. We first create the new view without complying to mvmm. Then, we will try to organize the code with respect to the mvvm pattern. Let's begin.
 
@@ -339,6 +341,8 @@ And that's it. The master detail navigation works fine while still applying some
 In this guide, we added a detail view to an existing Xamarin app. We first coded without caring about mvvm and splitting the concerns. After that, we worked on adding commends, behaviors, dependency injection and a navigation service. Although the result is pretty interesting, the way to get there was pretty tough. For example, some libraries did not work as expected, I also needed to update Visual Studio Mac to a beta version.
 
 My final note after finishing this app is that while Xamarin is still unstable and not mature in terms of libraries and tooling, it goes to towards the correct direction and feel that it will get better if Microsoft keeps putting the necessary efforts in that technology.
+
+The code is available on [GitHub](https://github.com/yostane/xamarin_guide/tree/master/PostListDetailsXamarin).
 
 Happy coding.
 
