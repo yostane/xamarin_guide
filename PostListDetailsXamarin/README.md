@@ -1,6 +1,6 @@
 # Displaying a detail page in Xamarin using mvvm
 
-The keywords are: mvvm, behaviors, commands, navigation service, MVVM Light.
+The keywords are: mvvm (Model-View-ViewModel), , behaviors, commands, navigation service, MVVM Light.
 
 - [Displaying a detail page in Xamarin using mvvm](#displaying-a-detail-page-in-xamarin-using-mvvm)
     - [Adding the detail page the easy way](#adding-the-detail-page-the-easy-way)
@@ -11,7 +11,7 @@ The keywords are: mvvm, behaviors, commands, navigation service, MVVM Light.
 
 ![sample](./assets/post-detail-2-small.png)
 
-In the previous guide, we developed a Xamarin app that displays on a list of items fetched from the internet. In this guide, we go further by opening a detail view when we tap on an item. We will first create the new view without complying to the mvmm pattern. After that, we will try to modify the code in order to follow mvvm principles. Let's begin :v:.
+In the previous guide, we developed a Xamarin app that displays on a list of items fetched from the internet. In this guide, we go further by opening a detail view when we tap on an item. We will first create the new view without complying to the mvvm pattern. After that, we will try to modify the code in order to follow mvvm principles. Let's begin :v:.
 
 ## Adding the detail page the easy way
 
