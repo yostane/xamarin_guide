@@ -11,13 +11,7 @@ namespace PostListDetailsXamarin
 		///<summary>
 		/// static app wide locator
 		/// </summary>
-		public static Locator Locator
-		{
-			get
-			{
-				return _locator ?? (_locator = new Locator());
-			}
-		}
+		public static Locator Locator => _locator ?? (_locator = new Locator());
 
 		public App()
 		{
