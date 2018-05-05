@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Ioc;
 using MvvmLight.XamarinForms;
 using ItemsDetailXamarin.Views;
 using PostListDetailsXamarin.Views;
+using EntityFrameworkXamarin.Helpers;
 
 namespace PostListDetailsXamarin.ViewModels
 {
@@ -26,6 +27,8 @@ namespace PostListDetailsXamarin.ViewModels
 			SimpleIoc.Default.Register<ItemListViewModel>();
 			SimpleIoc.Default.Register<PostDetailViewModel>();
 
+			SimpleIoc.Default.Register<PostDatabaseHelper<PostDatabaseContext>>();
+
 			//Create the navigation service
 			var navigation = new NavigationService();
 			//Configure the pages managed by the navigation service. Each page is referenced by a key.
@@ -40,6 +43,7 @@ namespace PostListDetailsXamarin.ViewModels
 		public ItemListViewModel ItemListViewModel => SimpleIoc.Default.GetInstance<ItemListViewModel>();
 		public PostDetailViewModel PostDetailViewModel => SimpleIoc.Default.GetInstance<PostDetailViewModel>();
 
+		public PostDatabaseHelper<PostDatabaseContext> PostDatabaseHelper => SimpleIoc.Default.GetInstance<PostDatabaseHelper<PostDatabaseContext>>();
 		#endregion
 	}
 }

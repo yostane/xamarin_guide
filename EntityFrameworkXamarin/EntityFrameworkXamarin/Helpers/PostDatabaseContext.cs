@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using RandomListXamarin.Model;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using System.IO;
 namespace EntityFrameworkXamarin.Helpers
 {
 	public class PostDatabaseContext : DbContext
@@ -13,17 +15,28 @@ namespace EntityFrameworkXamarin.Helpers
 		public DbSet<Post> Posts { get; set; }
 
 		#region initialization
-		public static PostDatabaseContext Create()
-		{
 
-		}
+		private const string databaseName = "database.db";
 
-		protected const string DatabasePath = "database.sqlite";
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			// Specify the path of the database here
-			optionsBuilder.UseSqlite($"Filename={DatabasePath}");
+
+			String databasePath = "";
+			switch (Device.RuntimePlatform)
+			{
+				case Device.iOS:
+					SQLitePCL.Batteries_V2.Init();
+					databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", databaseName); ;
+					break;
+				case Device.Android:
+					databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), databaseName);
+					break;
+				default:
+					throw new NotImplementedException("Platform not supported");
+			}
+			// Specify that we will use sqlite and the path of the database here
+			optionsBuilder.UseSqlite($"Filename={databasePath}");
 		}
 		#endregion
 	}

@@ -37,12 +37,25 @@ namespace PostListDetailsXamarin.ViewModels
 		public async Task UpdatePostsAsync()
 		{
 			var newPosts = await JsonPlaceholderHelper.GetPostsAsync();
-			this.Posts.Clear();
-			newPosts.ForEach((post) =>
+			await App.Locator.PostDatabaseHelper.AddOrUpdatePostsAsync(newPosts);
+			var databasePosts = await App.Locator.PostDatabaseHelper.getPostsAsync();
+			//This loop allows to replace only the items that changed in the observable collection
+			for (int i = 0; i < databasePosts.Count; i += 1)
 			{
-				post.ImageUrl = "https://picsum.photos/70/?image=" + newPosts.IndexOf(post);
-				this.Posts.Add(post);
-			});
+				if (Posts.Count <= i)
+				{
+					Posts.Add(databasePosts[i]);
+				}
+				else if (databasePosts[i].Id != Posts[i].Id)
+				{
+					Posts[i] = databasePosts[i];
+				}
+			}
+			//delete remaining items in the Posts collection
+			for (int i = databasePosts.Count; i < Posts.Count; i += 1)
+			{
+				Posts.RemoveAt(i);
+			}
 		}
 
 	}

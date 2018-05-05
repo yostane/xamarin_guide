@@ -19,6 +19,7 @@ namespace RandomListXamarin.Model
 		[JsonProperty("body")]
 		public string Body { get; set; }
 
-		public string ImageUrl { get; set; }
+		//ImageURL is getter only property
+		public string ImageUrl => $"https://picsum.photos/70/?image={Id}";
 	}
 }
