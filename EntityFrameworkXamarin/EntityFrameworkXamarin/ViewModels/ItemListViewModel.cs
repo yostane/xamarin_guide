@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using PostListDetailsXamarin.ViewModels;
 using PostListDetailsXamarin;
 using RandomListXamarin.ViewModels;
+using System.Net.Http;
 
 namespace PostListDetailsXamarin.ViewModels
 {
@@ -36,8 +37,17 @@ namespace PostListDetailsXamarin.ViewModels
 
 		public async Task UpdatePostsAsync()
 		{
-			var newPosts = await JsonPlaceholderHelper.GetPostsAsync();
-			await App.Locator.PostDatabaseHelper.AddOrUpdatePostsAsync(newPosts);
+			try
+			{
+				//Update from backend if possible and update database
+				var newPosts = await JsonPlaceholderHelper.GetPostsAsync();
+				await App.Locator.PostDatabaseHelper.AddOrUpdatePostsAsync(newPosts);
+			}
+			catch (HttpRequestException e)
+			{
+				System.Diagnostics.Debug.WriteLine($"HTTP request exception {e.Message}");
+			}
+			//Always dispay what's in the database
 			var databasePosts = await App.Locator.PostDatabaseHelper.getPostsAsync();
 			//This loop allows to replace only the items that changed in the observable collection
 			for (int i = 0; i < databasePosts.Count; i += 1)
