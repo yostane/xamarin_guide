@@ -49,7 +49,8 @@ namespace PostListDetailsXamarin.ViewModels
 			}
 			//Always dispay what's in the database
 			var databasePosts = await App.Locator.PostDatabaseHelper.getPostsAsync();
-			//This loop allows to replace only the items that changed in the observable collection
+
+			//The following algorithm allows to replace only the items that changed in the observable collection
 			for (int i = 0; i < databasePosts.Count; i += 1)
 			{
 				if (Posts.Count <= i)
