@@ -1,6 +1,8 @@
 # Getting started with Xamarin development (as of June 2018)
 
-This article aims to provide a state of the art about Xamarin and .Net. I hope reading the following text will give you better understanding and will allow to start developing Xamarin apps more efficiently.
+![logo](assets/xamarin-logo.svg 'logo')
+
+Xamarin is a powerful yet misunderstood technology. This article aims to provide a state of the art about Xamarin and .Net. I hope that reading the following text will give you better understanding on these subjects and will allow to start developing Xamarin apps more comfortably.
 
 We start by defining what is Xamarin.
 
@@ -8,7 +10,7 @@ We start by defining what is Xamarin.
 
 Xamarin is a framework that allows to develop native apps for multiple platforms using a single **C#** codebase and **.Net**. Thanks to that, a lot of common code can be shared and reused, allowing to reduce the codebase drastically. This gain is not possible if we have used platform specific frameworks and SDKs (such as Xcode or Android Studio) because it would require to write the whole app for each targeted platform.
 
-Thus, Xamarin is particularly fitting when we develop multiplatofm apps.
+Thus, Xamarin is particularly fitting when we develop multi-platform apps.
 
 Before diving more into Xamarin, let's take a step back and look at its core: the .Net framework.
 
@@ -70,8 +72,39 @@ To summarize, a Xamarin project revolves around these parts:
 
 Theoretically, this way of doing things allows to target any possible platforms, as long as there are C# bindings available and/or support for Xamarin.Forms.
 
+A Xamarin.Forms project is very similar to a WPF project. In fact, views are developed with XAML and each view has an associated code behind file written in c#. You may correctly guess that we can also use binding, MVVM, LINQ, Entity Framework and many other .Net technologies.
+
+A .Net developer can quickly begin developing Xamarin apps because many .Net libraries are also available in Xamarin. The next section shows some of them
+
+## Some libraries
+
+Many additional libraries are available either directly in the .Net Standard or through the NuGet package manager. In addition to that, NuGet is also well integrated into Visual Studio.
+
+Here are some useful libraries:
+
+- [HTTPClient](https://developer.xamarin.com/samples/monotouch/HttpClient/)
+- [JSON](https://www.newtonsoft.com/json)
+- [Persistence with Entity Frameowrk Core](https://docs.microsoft.com/en-us/ef/core/)
+- Dependency Injection: [MVVM Light](http://www.mvvmlight.net/) or [Autofac](https://autofac.org/)
+- [Xamarin essentials: API X platform](https://github.com/xamarin/Essentials)
+
+It is now time to conclude.
+
 ## Conclusion
+
+This article is an overview of Xamarin development and the .Net ecosystem. We have seen that Xamarin it is mainly based on these frameworks: Xamarin.iOS, Xamarin.Android, Xamarin.Mac and Xamarin.Forms. They allows to develop iOS, Android, UWP and many more platforms.
+
+Thanks to .Net standard, a lot of c# libraries and code can be reused across Xamarin and non Xamarin apps.
 
 We have also seen that Xamarin.Forms allows to develop the UI once for different platforms.
 
 Currently, we see that Xamarin is mostly used to make iOS and Android apps. However, I hope to see Xamarin apps appear on many more platforms.
+
+I hope this article made you more comfortable with Xamarin. I suggest you to practice on concrete Xamarin apps after that to consolidate what you learned. I made some tutorials that may help you practice: [tutorial 1](https://codeburst.io/xamarin-list-view-guide-ac97bac5955a), [tutorial 2](https://codeburst.io/displaying-a-detail-page-in-xamarin-using-mvvm-f3518447db96), [Tutorial 3](https://medium.com/@yostane/data-persistence-in-xamarin-using-entity-framework-core-e3a58bdee9d1)
+
+Happy coding.
+
+## Links
+
+- [Official page](https://visualstudio.microsoft.com/xamarin/)
+- [Beautiful apps made with Xamarin](https://github.com/jsuarezruiz/xamarin-forms-goodlooking-UI)
