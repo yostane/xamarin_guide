@@ -8,7 +8,7 @@ We start by defining what is Xamarin.
 
 ## What is Xamarin
 
-Xamarin is a framework that allows to develop native apps for multiple platforms using a single **C#** codebase and **.Net**. Thanks to that, a lot of common code can be shared and reused, allowing to reduce the codebase drastically. This gain is not possible if we have used platform specific frameworks and SDKs (such as Xcode or Android Studio) because it would require to write the whole app for each targeted platform.
+Xamarin is a technology that allows to develop native apps for multiple platforms using a single **C#** codebase and **.Net**. Thanks to that, a lot of common code can be shared and reused, allowing to reduce the codebase drastically. This gain is not possible if we have used platform specific frameworks and SDKs (such as Xcode or Android Studio) because it would require to write the whole app for each targeted platform.
 
 Thus, Xamarin is particularly fitting when we develop multi-platform apps.
 
@@ -24,7 +24,9 @@ One problem that was confusing with .Net is that there was not a standard set of
 
 _As a side note, before .Net standard, Microsoft tried to unify APIs using PCLs but it was not really successful._
 
-To synthesize, .Net standard is a set of APIs for .Net and Xamarin - among other implementations - supports .Net standard 2.0.
+To synthesize, .Net standard is a set of APIs for .Net and Xamarin - among other implementations - supports .Net standard 2.0, as shown by the following illustration.
+
+![dotnet standard - source https://blog.xamarin.com/share-code-net-standard-2-0/](assets/netstandard.png 'dotnet standard - source https://blog.xamarin.com/share-code-net-standard-2-0/')
 
 The drawback of .Net core compared to JavaSE is that it does not provide a standard UI library (which is very hard to achieve in practice). The next section gives the current status.
 
@@ -108,3 +110,4 @@ Happy coding.
 
 - [Official page](https://visualstudio.microsoft.com/xamarin/)
 - [Beautiful apps made with Xamarin](https://github.com/jsuarezruiz/xamarin-forms-goodlooking-UI)
+- [Share code with .Net standard 2.0](https://blog.xamarin.com/share-code-net-standard-2-0/)
